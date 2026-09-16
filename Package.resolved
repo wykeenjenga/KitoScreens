@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "kitobuttons",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/wykeenjenga/KitoButtons.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "d85ee1885e0a3ab768d74c260bc0aa14d52a6e55"
+      }
+    },
+    {
+      "identity" : "kitofields",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/wykeenjenga/KitoFields.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "293125b452336125244fa8d76738495715b87043"
+      }
+    }
+  ],
+  "version" : 2
+}
