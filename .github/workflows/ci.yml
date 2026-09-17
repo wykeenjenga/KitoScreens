@@ -19,3 +19,9 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           xcodebuild -project Example/KitoScreensExample.xcodeproj -scheme KitoScreensExample -destination 'generic/platform=iOS Simulator' -skipPackagePluginValidation CODE_SIGNING_ALLOWED=NO build | xcpretty && exit ${PIPESTATUS[0]}
+  podspec:
+    name: Podspec lint
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pod lib lint KitoScreens.podspec --allow-warnings --platforms=ios --quick
