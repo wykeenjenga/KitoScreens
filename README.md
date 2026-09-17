@@ -9,7 +9,7 @@ Prebuilt, production-ready SwiftUI screens composed from [KitoFields](https://gi
 ## Installation
 
 ```swift
-.package(url: "https://github.com/wykeenjenga/KitoScreens.git", from: "0.1.0")
+.package(url: "https://github.com/wykeenjenga/KitoScreens.git", from: "0.1.1")
 ```
 
 Then `import KitoScreens`. Field and button themes come from `KitoFieldTheme` / `KitoButtonTheme` in the environment, so the screens match the rest of your app automatically.

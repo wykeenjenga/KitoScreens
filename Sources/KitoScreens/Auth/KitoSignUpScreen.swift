@@ -70,7 +70,7 @@ public struct KitoSignUpScreen: View {
                         Link("terms and privacy policy", destination: termsURL).font(.footnote.weight(.semibold))
                     }
                 }
-                .toggleStyle(.switch)
+                .modifier(SwitchStyleIfAvailable())
             }
         } footer: {
             KitoButton(title) {

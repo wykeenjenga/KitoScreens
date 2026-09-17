@@ -71,7 +71,7 @@ public struct KitoCardCheckoutScreen: View {
             KitoNameField("Name on card", text: $holder, prompt: "As printed on the card").autocapitalization(.characters).required().isValid(bind("holder"))
             KitoCountryField("Billing country", selection: $country).flagStyle(.circle)
             if offersSaveCard {
-                Toggle("Save this card for next time", isOn: $saveCard).font(.subheadline).toggleStyle(.switch)
+                Toggle("Save this card for next time", isOn: $saveCard).font(.subheadline).modifier(SwitchStyleIfAvailable())
             }
             HStack(spacing: 6) {
                 Image(systemName: "lock.fill").font(.caption)
