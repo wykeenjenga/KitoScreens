@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KitoScreens'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'Prebuilt SwiftUI screens: sign in, sign up, edit profile, M-Pesa and card checkout.'
   s.description      = <<-DESC
     Production-ready SwiftUI screens composed from KitoFields and KitoButtons. Hand each screen an
