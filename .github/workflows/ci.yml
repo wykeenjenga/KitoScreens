@@ -25,3 +25,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: pod lib lint KitoScreens.podspec --allow-warnings --platforms=ios --quick
+  platforms:
+    name: Build for ${{ matrix.destination }}
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        destination:
+          - "generic/platform=tvOS Simulator"
+          - "generic/platform=watchOS Simulator"
+          - "generic/platform=visionOS Simulator"
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          xcodebuild -scheme KitoScreens -destination '${{ matrix.destination }}' -skipPackagePluginValidation build | xcpretty && exit ${PIPESTATUS[0]}

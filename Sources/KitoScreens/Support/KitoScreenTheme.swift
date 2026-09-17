@@ -100,3 +100,15 @@ public enum KitoScreenOutcome: Sendable, Equatable {
     case success
     case failure(message: String)
 }
+
+
+/// `SwitchToggleStyle` needs tvOS 18; other platforms use it directly.
+struct SwitchStyleIfAvailable: ViewModifier {
+    func body(content: Content) -> some View {
+        #if os(tvOS)
+        content
+        #else
+        content.toggleStyle(.switch)
+        #endif
+    }
+}
