@@ -22,6 +22,6 @@ Pod::Spec.new do |s|
   s.frameworks       = 'SwiftUI'
   s.source_files     = 'Sources/KitoScreens/**/*.swift'
   s.resource_bundles = { 'KitoScreens' => ['Sources/KitoScreens/Resources/**/*.lproj'] }
-  s.dependency 'KitoFields', '~> 1.4'
-  s.dependency 'KitoButtons', '~> 1.5'
+  s.dependency 'KitoFields', '>= 1.6', '< 2.0'
+  s.dependency 'KitoButtons', '>= 1.7', '< 2.0'
 end
