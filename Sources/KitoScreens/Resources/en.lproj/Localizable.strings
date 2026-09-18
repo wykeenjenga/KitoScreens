@@ -47,6 +47,9 @@
 "mpesa.paymentFailed" = "Payment failed";
 "mpesa.copy" = "Copy %@";
 "mpesa.instructions" = "Open M-Pesa ▸ Lipa na M-Pesa ▸ %@, enter the details above, then confirm here.";
+/* Safaricom's M-Pesa app shows these two menu item names in English regardless of the
+   phone's language, so they are intentionally identical across all three catalogs here —
+   translating them would not match what the customer actually sees when they open M-Pesa. */
 "mpesa.payBill" = "Pay Bill";
 "mpesa.buyGoods" = "Buy Goods";
 
@@ -72,3 +75,5 @@
 "otp.continueButton" = "Continue";
 "otp.incorrectCode" = "Incorrect code";
 "otp.verified" = "Verified";
+"otp.resend" = "Resend code";
+"otp.resendIn" = "Resend in %ds";

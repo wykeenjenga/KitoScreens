@@ -49,7 +49,11 @@ public struct KitoOTPVerificationScreen: View {
             VStack(spacing: 14) {
                 KitoCodeField(code: $code, length: length)
                     .errorMessage(errorMessage)
-                    .onComplete { verify($0) }
+                    .onComplete { value in
+                        // Auto-submit on the last digit doesn't go through the button, so it gets
+                        // no phase feedback of its own — the field's own shake/error still applies.
+                        Task { try? await verify(value) }
+                    }
                 if let onResend {
                     KitoResendLink(cooldown: resendCooldown, isBusy: $isResending) {
                         try await onResend()
@@ -57,8 +61,10 @@ public struct KitoOTPVerificationScreen: View {
                 }
             }
         } footer: {
+            // An async action (rather than firing a detached Task and returning immediately)
+            // is what lets showsResult()/successTitle() actually reflect submit's outcome.
             KitoButton(KitoScreensLocalization.string("otp.continueButton", "Continue")) {
-                verify(code)
+                try await verify(code)
             }
             .showsResult()
             .successTitle(KitoScreensLocalization.string("otp.verified", "Verified"))
@@ -74,22 +80,22 @@ public struct KitoOTPVerificationScreen: View {
         return KitoScreenHeader(title, subtitle: subtitle)
     }
 
-    private func verify(_ value: String) {
+    private func verify(_ value: String) async throws {
         guard value.count == length, !isVerifying else { return }
         errorMessage = nil
         isVerifying = true
-        Task {
-            defer { isVerifying = false }
-            do {
-                let outcome = try await submit(value)
-                if case .failure(let message) = outcome {
-                    errorMessage = message.isEmpty ? KitoScreensLocalization.string("otp.incorrectCode", "Incorrect code") : message
-                    code = ""
-                }
-            } catch {
-                errorMessage = KitoScreensLocalization.string("otp.incorrectCode", "Incorrect code")
+        defer { isVerifying = false }
+        do {
+            let outcome = try await submit(value)
+            if case .failure(let message) = outcome {
+                errorMessage = message.isEmpty ? KitoScreensLocalization.string("otp.incorrectCode", "Incorrect code") : message
                 code = ""
+                throw KitoScreenError.rejected
             }
+        } catch {
+            if errorMessage == nil { errorMessage = KitoScreensLocalization.string("otp.incorrectCode", "Incorrect code") }
+            code = ""
+            throw error
         }
     }
 
@@ -117,7 +123,7 @@ private struct KitoResendLink: View {
             if isBusy {
                 ProgressView().scaleEffect(0.8)
             } else {
-                Text(remaining > 0 ? KitoLocalization.format("code.resendIn", "Resend in %ds", remaining) : KitoLocalization.string("code.resend", "Resend code"))
+                Text(remaining > 0 ? KitoScreensLocalization.format("otp.resendIn", "Resend in %ds", remaining) : KitoScreensLocalization.string("otp.resend", "Resend code"))
                     .font(.footnote)
                     .underline(remaining == 0)
             }
@@ -132,9 +138,15 @@ private struct KitoResendLink: View {
         isBusy = true
         Task {
             defer { isBusy = false }
-            try? await action()
-            remaining = Int(cooldown.rounded(.up))
-            startCountdown()
+            // Only start the cooldown once the resend actually went out — a failed send
+            // (network error, server rejection) should leave the link enabled to retry.
+            do {
+                try await action()
+                remaining = Int(cooldown.rounded(.up))
+                startCountdown()
+            } catch {
+                // Leave `remaining` at 0; the link stays tappable.
+            }
         }
     }
 

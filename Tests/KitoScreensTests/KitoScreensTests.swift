@@ -45,4 +45,21 @@ final class KitoScreensLocalizationTests: XCTestCase {
         let label = KitoScreensLocalization.format("mpesa.pay", "Pay %@", "KES 1,250")
         XCTAssertTrue(label.contains("KES 1,250"))
     }
+
+    /// Regression for a CodeRabbit finding: the OTP screen's resend link used to read
+    /// `KitoLocalization` (KitoFields' own provider) for its copy, so an app that localized only
+    /// `KitoScreensLocalization` would get English "Resend code" regardless of language. The
+    /// resend keys must live — and resolve — under `KitoScreensLocalization`.
+    func testResendCopyIsOwnedByKitoScreensLocalizationNotKitoFields() {
+        KitoScreensLocalization.provider = { key, _ in
+            switch key {
+            case "otp.resend": return "Tuma tena"
+            case "otp.resendIn": return "Baada ya %ds"
+            default: return nil
+            }
+        }
+        defer { KitoScreensLocalization.provider = nil }
+        XCTAssertEqual(KitoScreensLocalization.string("otp.resend", "Resend code"), "Tuma tena")
+        XCTAssertEqual(KitoScreensLocalization.format("otp.resendIn", "Resend in %ds", 12), "Baada ya 12s")
+    }
 }
