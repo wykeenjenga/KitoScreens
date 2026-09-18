@@ -52,34 +52,34 @@ public struct KitoMpesaScreen: View {
     private var formattedAmount: String { kenya.formatCurrency(effectiveAmount) ?? "\(effectiveAmount)" }
 
     public var body: some View {
-        KitoScreenScaffold(header: KitoScreenHeader(mode == .express ? "Pay with M-Pesa" : "Pay via M-Pesa", subtitle: merchantName.map { "Paying \($0)" })) {
+        KitoScreenScaffold(header: KitoScreenHeader(mode == .express ? KitoScreensLocalization.string("mpesa.payWithMpesa", "Pay with M-Pesa") : KitoScreensLocalization.string("mpesa.payViaMpesa", "Pay via M-Pesa"), subtitle: merchantName.map { KitoScreensLocalization.format("mpesa.payingMerchant", "Paying %@", $0) })) {
             amountCard
             switch mode {
             case .express:
-                KitoPhoneField("M-Pesa number", phoneNumber: $phone)
+                KitoPhoneField(KitoScreensLocalization.string("mpesa.mpesaNumber", "M-Pesa number"), phoneNumber: $phone)
                     .countries(allowed: ["KE"], preferred: ["KE"])
                     .defaultCountry("KE").countrySelection(.locked).showsChevron(false)
-                    .helperText("You'll get a prompt on this phone to enter your M-Pesa PIN.")
+                    .helperText(KitoScreensLocalization.string("mpesa.pinHelp", "You'll get a prompt on this phone to enter your M-Pesa PIN."))
                     .required().validationIndicators().isValid($phoneValid)
                     .errorMessage(serverError)
                 if awaitingPin {
-                    Label("Check your phone and enter your M-Pesa PIN", systemImage: "iphone.radiowaves.left.and.right")
+                    Label(KitoScreensLocalization.string("mpesa.checkPhone", "Check your phone and enter your M-Pesa PIN"), systemImage: "iphone.radiowaves.left.and.right")
                         .font(.subheadline).foregroundColor(.secondary)
                 }
             case .paybill(let business, let reference):
-                instructions([("Business number", business), ("Account number", reference), ("Amount", formattedAmount)])
+                instructions([(KitoScreensLocalization.string("mpesa.businessNumber", "Business number"), business), (KitoScreensLocalization.string("mpesa.accountNumber", "Account number"), reference), (KitoScreensLocalization.string("mpesa.amount", "Amount"), formattedAmount)])
             case .till(let till):
-                instructions([("Till number", till), ("Amount", formattedAmount)])
+                instructions([(KitoScreensLocalization.string("mpesa.tillNumber", "Till number"), till), (KitoScreensLocalization.string("mpesa.amount", "Amount"), formattedAmount)])
             }
         } footer: {
-            KitoButton(mode == .express ? "Pay \(formattedAmount)" : "I have paid", systemImage: mode == .express ? "lock.fill" : "checkmark.seal") {
+            KitoButton(mode == .express ? KitoScreensLocalization.format("mpesa.pay", "Pay %@", formattedAmount) : KitoScreensLocalization.string("mpesa.iHavePaid", "I have paid"), systemImage: mode == .express ? "lock.fill" : "checkmark.seal") {
                 serverError = nil
                 awaitingPin = mode == .express
                 defer { awaitingPin = false }
                 let outcome = try await submit(Request(phoneE164: phone?.e164 ?? "", amount: effectiveAmount, mode: mode))
                 if case .failure(let message) = outcome { serverError = message; throw KitoScreenError.rejected }
             }
-            .showsResult().successTitle("Payment received").failureTitle("Payment failed")
+            .showsResult().successTitle(KitoScreensLocalization.string("mpesa.paymentReceived", "Payment received")).failureTitle(KitoScreensLocalization.string("mpesa.paymentFailed", "Payment failed"))
             .size(.large).fullWidth()
             .disabled(mode == .express && !phoneValid)
             .kitoButtonTheme { $0.tint = Color(red: 0.24, green: 0.66, blue: 0.30); $0.onTint = .white }
@@ -88,7 +88,7 @@ public struct KitoMpesaScreen: View {
 
     private var amountCard: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Amount").font(.subheadline).foregroundColor(.secondary)
+            Text(KitoScreensLocalization.string("mpesa.amount", "Amount")).font(.subheadline).foregroundColor(.secondary)
             if amountEditable {
                 KitoCurrencyField("", value: $editableAmount, currencyCode: currencyCode).range(1...500_000)
             } else {
@@ -109,7 +109,7 @@ public struct KitoMpesaScreen: View {
                         Text(row.1).font(.body.weight(.semibold)).monospacedDigit()
                     }
                     Spacer()
-                    KitoButton(systemImage: "doc.on.doc", accessibilityLabel: "Copy \(row.0)") {
+                    KitoButton(systemImage: "doc.on.doc", accessibilityLabel: KitoScreensLocalization.format("mpesa.copy", "Copy %@", row.0)) {
                         #if canImport(UIKit) && !os(watchOS) && !os(tvOS)
                         UIPasteboard.general.string = row.1
                         #endif
@@ -119,7 +119,7 @@ public struct KitoMpesaScreen: View {
                 .padding(.vertical, 12)
                 if index < rows.count - 1 { Divider() }
             }
-            Text("Open M-Pesa ▸ Lipa na M-Pesa ▸ \(mode.isPaybill ? "Pay Bill" : "Buy Goods"), enter the details above, then confirm here.")
+            Text(KitoScreensLocalization.format("mpesa.instructions", "Open M-Pesa ▸ Lipa na M-Pesa ▸ %@, enter the details above, then confirm here.", mode.isPaybill ? KitoScreensLocalization.string("mpesa.payBill", "Pay Bill") : KitoScreensLocalization.string("mpesa.buyGoods", "Buy Goods")))
                 .font(.footnote).foregroundColor(.secondary).padding(.top, 8)
         }
         .padding(.horizontal, 16).padding(.vertical, 6)

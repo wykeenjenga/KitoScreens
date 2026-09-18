@@ -1,0 +1,79 @@
+/* Login */
+"login.title" = "Sign in";
+"login.subtitle" = "Welcome back. Enter your details to continue.";
+"login.forgotPassword" = "Forgot password?";
+"login.or" = "or";
+"login.newHere" = "New here?";
+"login.createAccount" = "Create an account";
+"login.continueWith" = "Continue with %@";
+
+/* Sign up */
+"signup.title" = "Create your account";
+"signup.subtitle" = "It takes less than a minute.";
+"signup.namePlaceholder" = "Jane Doe";
+"signup.confirmPassword" = "Confirm password";
+"signup.confirmPasswordPlaceholder" = "Re-enter your password";
+"signup.agreeToThe" = "I agree to the";
+"signup.termsAndPrivacy" = "terms and privacy policy";
+"signup.accountCreated" = "Account created";
+"signup.alreadyHaveAccount" = "Already have an account?";
+"signup.signIn" = "Sign in";
+
+/* Edit profile */
+"profile.title" = "Edit profile";
+"profile.yourName" = "Your name";
+"profile.changePhoto" = "Change photo";
+"profile.fullName" = "Full name";
+"profile.dateOfBirth" = "Date of birth";
+"profile.bio" = "Bio";
+"profile.bioPlaceholder" = "A few words about you";
+"profile.saveChanges" = "Save changes";
+"profile.saved" = "Saved";
+
+/* M-Pesa */
+"mpesa.payWithMpesa" = "Pay with M-Pesa";
+"mpesa.payViaMpesa" = "Pay via M-Pesa";
+"mpesa.payingMerchant" = "Paying %@";
+"mpesa.mpesaNumber" = "M-Pesa number";
+"mpesa.pinHelp" = "You'll get a prompt on this phone to enter your M-Pesa PIN.";
+"mpesa.checkPhone" = "Check your phone and enter your M-Pesa PIN";
+"mpesa.businessNumber" = "Business number";
+"mpesa.accountNumber" = "Account number";
+"mpesa.amount" = "Amount";
+"mpesa.tillNumber" = "Till number";
+"mpesa.pay" = "Pay %@";
+"mpesa.iHavePaid" = "I have paid";
+"mpesa.paymentReceived" = "Payment received";
+"mpesa.paymentFailed" = "Payment failed";
+"mpesa.copy" = "Copy %@";
+"mpesa.instructions" = "Open M-Pesa ▸ Lipa na M-Pesa ▸ %@, enter the details above, then confirm here.";
+/* Safaricom's M-Pesa app shows these two menu item names in English regardless of the
+   phone's language, so they are intentionally identical across all three catalogs here —
+   translating them would not match what the customer actually sees when they open M-Pesa. */
+"mpesa.payBill" = "Pay Bill";
+"mpesa.buyGoods" = "Buy Goods";
+
+/* Card checkout */
+"checkout.title" = "Checkout";
+"checkout.nameOnCard" = "Name on card";
+"checkout.nameOnCardPlaceholder" = "As printed on the card";
+"checkout.billingCountry" = "Billing country";
+"checkout.saveCard" = "Save this card for next time";
+"checkout.encryptedNotice" = "Card details are encrypted and never stored on this device.";
+"checkout.pay" = "Pay %@";
+"checkout.total" = "Total";
+"checkout.paymentComplete" = "Payment complete";
+"checkout.paymentDeclined" = "Payment declined";
+
+/* Shared fields */
+"field.mobileNumber" = "Mobile number";
+"field.country" = "Country";
+
+/* OTP verification */
+"otp.title" = "Verify your number";
+"otp.subtitleFormat" = "Enter the code we sent to %@";
+"otp.continueButton" = "Continue";
+"otp.incorrectCode" = "Incorrect code";
+"otp.verified" = "Verified";
+"otp.resend" = "Resend code";
+"otp.resendIn" = "Resend in %ds";

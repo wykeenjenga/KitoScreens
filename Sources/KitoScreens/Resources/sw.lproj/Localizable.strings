@@ -1,0 +1,79 @@
+/* Login */
+"login.title" = "Ingia";
+"login.subtitle" = "Karibu tena. Weka maelezo yako kuendelea.";
+"login.forgotPassword" = "Umesahau nenosiri?";
+"login.or" = "au";
+"login.newHere" = "Mgeni hapa?";
+"login.createAccount" = "Fungua akaunti";
+"login.continueWith" = "Endelea na %@";
+
+/* Sign up */
+"signup.title" = "Fungua akaunti yako";
+"signup.subtitle" = "Inachukua chini ya dakika moja.";
+"signup.namePlaceholder" = "Jane Doe";
+"signup.confirmPassword" = "Thibitisha nenosiri";
+"signup.confirmPasswordPlaceholder" = "Weka nenosiri lako tena";
+"signup.agreeToThe" = "Nakubali";
+"signup.termsAndPrivacy" = "masharti na sera ya faragha";
+"signup.accountCreated" = "Akaunti imefunguliwa";
+"signup.alreadyHaveAccount" = "Una akaunti tayari?";
+"signup.signIn" = "Ingia";
+
+/* Edit profile */
+"profile.title" = "Hariri wasifu";
+"profile.yourName" = "Jina lako";
+"profile.changePhoto" = "Badilisha picha";
+"profile.fullName" = "Jina kamili";
+"profile.dateOfBirth" = "Tarehe ya kuzaliwa";
+"profile.bio" = "Wasifu";
+"profile.bioPlaceholder" = "Maneno machache kukuhusu";
+"profile.saveChanges" = "Hifadhi mabadiliko";
+"profile.saved" = "Imehifadhiwa";
+
+/* M-Pesa */
+"mpesa.payWithMpesa" = "Lipa na M-Pesa";
+"mpesa.payViaMpesa" = "Lipa kupitia M-Pesa";
+"mpesa.payingMerchant" = "Unalipa %@";
+"mpesa.mpesaNumber" = "Namba ya M-Pesa";
+"mpesa.pinHelp" = "Utapokea ujumbe kwenye simu hii kuweka PIN yako ya M-Pesa.";
+"mpesa.checkPhone" = "Angalia simu yako na uweke PIN yako ya M-Pesa";
+"mpesa.businessNumber" = "Namba ya biashara";
+"mpesa.accountNumber" = "Namba ya akaunti";
+"mpesa.amount" = "Kiasi";
+"mpesa.tillNumber" = "Namba ya till";
+"mpesa.pay" = "Lipa %@";
+"mpesa.iHavePaid" = "Nimelipa";
+"mpesa.paymentReceived" = "Malipo yamepokelewa";
+"mpesa.paymentFailed" = "Malipo yameshindwa";
+"mpesa.copy" = "Nakili %@";
+"mpesa.instructions" = "Fungua M-Pesa ▸ Lipa na M-Pesa ▸ %@, weka maelezo hapo juu, kisha thibitisha hapa.";
+/* Safaricom's M-Pesa app shows these two menu item names in English regardless of the
+   phone's language, so they are intentionally identical across all three catalogs here —
+   translating them would not match what the customer actually sees when they open M-Pesa. */
+"mpesa.payBill" = "Pay Bill";
+"mpesa.buyGoods" = "Buy Goods";
+
+/* Card checkout */
+"checkout.title" = "Malipo";
+"checkout.nameOnCard" = "Jina kwenye kadi";
+"checkout.nameOnCardPlaceholder" = "Kama ilivyochapishwa kwenye kadi";
+"checkout.billingCountry" = "Nchi ya malipo";
+"checkout.saveCard" = "Hifadhi kadi hii kwa mara nyingine";
+"checkout.encryptedNotice" = "Maelezo ya kadi yamesimbwa na hayahifadhiwi kwenye kifaa hiki.";
+"checkout.pay" = "Lipa %@";
+"checkout.total" = "Jumla";
+"checkout.paymentComplete" = "Malipo yamekamilika";
+"checkout.paymentDeclined" = "Malipo yamekataliwa";
+
+/* Shared fields */
+"field.mobileNumber" = "Namba ya simu";
+"field.country" = "Nchi";
+
+/* OTP verification */
+"otp.title" = "Thibitisha namba yako";
+"otp.subtitleFormat" = "Weka msimbo tuliotuma kwa %@";
+"otp.continueButton" = "Endelea";
+"otp.incorrectCode" = "Msimbo si sahihi";
+"otp.verified" = "Imethibitishwa";
+"otp.resend" = "Tuma msimbo tena";
+"otp.resendIn" = "Tuma tena baada ya sekunde %d";

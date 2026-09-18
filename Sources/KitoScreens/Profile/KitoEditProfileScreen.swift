@@ -54,31 +54,31 @@ public struct KitoEditProfileScreen: View {
     private var isValid: Bool { valid.values.allSatisfy { $0 } }
 
     public var body: some View {
-        KitoScreenScaffold(header: KitoScreenHeader("Edit profile")) {
+        KitoScreenScaffold(header: KitoScreenHeader(KitoScreensLocalization.string("profile.title", "Edit profile"))) {
             HStack(spacing: 16) {
                 (avatar ?? AnyView(Image(systemName: "person.crop.circle.fill").resizable().foregroundColor(.secondary)))
                     .frame(width: 72, height: 72).clipShape(Circle())
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(draft.name.isEmpty ? "Your name" : draft.name).font(.headline)
-                    if let onChangeAvatar { KitoButton("Change photo", systemImage: "camera") { onChangeAvatar() }.variant(.tonal).size(.small) }
+                    Text(draft.name.isEmpty ? KitoScreensLocalization.string("profile.yourName", "Your name") : draft.name).font(.headline)
+                    if let onChangeAvatar { KitoButton(KitoScreensLocalization.string("profile.changePhoto", "Change photo"), systemImage: "camera") { onChangeAvatar() }.variant(.tonal).size(.small) }
                 }
                 Spacer()
             }
-            KitoNameField("Full name", text: $draft.name).required().isValid(bind("name"))
+            KitoNameField(KitoScreensLocalization.string("profile.fullName", "Full name"), text: $draft.name).required().isValid(bind("name"))
             KitoUsernameField(text: $draft.username).availability { name in await usernameAvailability?(name) ?? true }.isValid(bind("username"))
             KitoEmailField(text: $draft.email).required().isValid(bind("email")).errorMessage(serverError)
-            KitoPhoneField("Mobile number", phoneNumber: $phone).flagStyle(.circle).onPhoneNumberChange { draft.phoneE164 = $0?.e164 ?? "" }
-            KitoCountryField("Country", selection: $country).flagStyle(.circle).onCountryChange { draft.countryISO = $0.isoCode }
-            KitoDateField("Date of birth", date: $draft.dateOfBirth).range(max: Date())
+            KitoPhoneField(KitoScreensLocalization.string("field.mobileNumber", "Mobile number"), phoneNumber: $phone).flagStyle(.circle).onPhoneNumberChange { draft.phoneE164 = $0?.e164 ?? "" }
+            KitoCountryField(KitoScreensLocalization.string("field.country", "Country"), selection: $country).flagStyle(.circle).onCountryChange { draft.countryISO = $0.isoCode }
+            KitoDateField(KitoScreensLocalization.string("profile.dateOfBirth", "Date of birth"), date: $draft.dateOfBirth).range(max: Date())
             KitoURLField(text: $draft.website)
-            KitoTextArea("Bio", text: $draft.bio, prompt: "A few words about you", lines: 3...6, limit: 160)
+            KitoTextArea(KitoScreensLocalization.string("profile.bio", "Bio"), text: $draft.bio, prompt: KitoScreensLocalization.string("profile.bioPlaceholder", "A few words about you"), lines: 3...6, limit: 160)
         } footer: {
-            KitoButton("Save changes", systemImage: "checkmark") {
+            KitoButton(KitoScreensLocalization.string("profile.saveChanges", "Save changes"), systemImage: "checkmark") {
                 serverError = nil
                 let outcome = try await save(draft)
                 if case .failure(let message) = outcome { serverError = message; throw KitoScreenError.rejected }
             }
-            .showsResult().successTitle("Saved")
+            .showsResult().successTitle(KitoScreensLocalization.string("profile.saved", "Saved"))
             .size(.large).fullWidth()
             .disabled(!hasChanges || !isValid)
         }
