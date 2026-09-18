@@ -41,6 +41,7 @@ public struct KitoMpesaScreen: View {
     @State private var phoneValid = false
     @State private var serverError: String?
     @State private var awaitingPin = false
+    @Environment(\.kitoScreenTheme) private var theme
 
     public init(amount: Decimal, mode: Mode = .express, submit: @escaping (Request) async throws -> KitoScreenOutcome) {
         self.amount = amount; self.mode = mode; self.submit = submit
@@ -64,7 +65,7 @@ public struct KitoMpesaScreen: View {
                     .errorMessage(serverError)
                 if awaitingPin {
                     Label(KitoScreensLocalization.string("mpesa.checkPhone", "Check your phone and enter your M-Pesa PIN"), systemImage: "iphone.radiowaves.left.and.right")
-                        .font(.subheadline).foregroundColor(.secondary)
+                        .font(theme.bodyFont).foregroundColor(.secondary)
                 }
             case .paybill(let business, let reference):
                 instructions([(KitoScreensLocalization.string("mpesa.businessNumber", "Business number"), business), (KitoScreensLocalization.string("mpesa.accountNumber", "Account number"), reference), (KitoScreensLocalization.string("mpesa.amount", "Amount"), formattedAmount)])
@@ -88,7 +89,7 @@ public struct KitoMpesaScreen: View {
 
     private var amountCard: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(KitoScreensLocalization.string("mpesa.amount", "Amount")).font(.subheadline).foregroundColor(.secondary)
+            Text(KitoScreensLocalization.string("mpesa.amount", "Amount")).font(theme.bodyFont).foregroundColor(.secondary)
             if amountEditable {
                 KitoCurrencyField("", value: $editableAmount, currencyCode: currencyCode).range(1...500_000)
             } else {
@@ -105,8 +106,8 @@ public struct KitoMpesaScreen: View {
             ForEach(Array(rows.enumerated()), id: \.offset) { index, row in
                 HStack {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(row.0).font(.caption).foregroundColor(.secondary)
-                        Text(row.1).font(.body.weight(.semibold)).monospacedDigit()
+                        Text(row.0).font(theme.captionFont).foregroundColor(.secondary)
+                        Text(row.1).font(theme.bodyFont.weight(.semibold)).monospacedDigit()
                     }
                     Spacer()
                     KitoButton(systemImage: "doc.on.doc", accessibilityLabel: KitoScreensLocalization.format("mpesa.copy", "Copy %@", row.0)) {
@@ -120,7 +121,7 @@ public struct KitoMpesaScreen: View {
                 if index < rows.count - 1 { Divider() }
             }
             Text(KitoScreensLocalization.format("mpesa.instructions", "Open M-Pesa ▸ Lipa na M-Pesa ▸ %@, enter the details above, then confirm here.", mode.isPaybill ? KitoScreensLocalization.string("mpesa.payBill", "Pay Bill") : KitoScreensLocalization.string("mpesa.buyGoods", "Buy Goods")))
-                .font(.footnote).foregroundColor(.secondary).padding(.top, 8)
+                .font(theme.captionFont).foregroundColor(.secondary).padding(.top, 8)
         }
         .padding(.horizontal, 16).padding(.vertical, 6)
         .background(RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color.primary.opacity(0.04)))

@@ -40,6 +40,7 @@ public struct KitoEditProfileScreen: View {
     @State private var country: KitoCountry?
     @State private var valid = [String: Bool]()
     @State private var serverError: String?
+    @Environment(\.kitoScreenTheme) private var theme
 
     public init(profile: Profile, save: @escaping (Profile) async throws -> KitoScreenOutcome) {
         original = profile
@@ -59,7 +60,7 @@ public struct KitoEditProfileScreen: View {
                 (avatar ?? AnyView(Image(systemName: "person.crop.circle.fill").resizable().foregroundColor(.secondary)))
                     .frame(width: 72, height: 72).clipShape(Circle())
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(draft.name.isEmpty ? KitoScreensLocalization.string("profile.yourName", "Your name") : draft.name).font(.headline)
+                    Text(draft.name.isEmpty ? KitoScreensLocalization.string("profile.yourName", "Your name") : draft.name).font(theme.emphasisFont)
                     if let onChangeAvatar { KitoButton(KitoScreensLocalization.string("profile.changePhoto", "Change photo"), systemImage: "camera") { onChangeAvatar() }.variant(.tonal).size(.small) }
                 }
                 Spacer()

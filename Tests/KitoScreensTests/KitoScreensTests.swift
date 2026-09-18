@@ -45,7 +45,31 @@ final class KitoScreensLocalizationTests: XCTestCase {
         let label = KitoScreensLocalization.format("mpesa.pay", "Pay %@", "KES 1,250")
         XCTAssertTrue(label.contains("KES 1,250"))
     }
+}
 
+final class KitoScreenThemeTests: XCTestCase {
+    func testNewTextRolesHaveSensibleDefaults() {
+        let theme = KitoScreenTheme()
+        XCTAssertEqual(theme.bodyFont, .subheadline)
+        XCTAssertEqual(theme.captionFont, .footnote)
+        XCTAssertEqual(theme.emphasisFont, .headline)
+    }
+
+    /// Regression: `KitoScreenTheme.default` must be a mutable, re-read-every-time fallback (not
+    /// a `static let` snapshot) so setting it once at launch reaches every screen.
+    @MainActor
+    func testSettingTheGlobalDefaultChangesWhatNewScreensFallBackTo() {
+        let original = KitoScreenTheme.default
+        defer { KitoScreenTheme.default = original }
+
+        var custom = KitoScreenTheme()
+        custom.bodyFont = .title
+        KitoScreenTheme.default = custom
+        XCTAssertEqual(KitoScreenTheme.default.bodyFont, .title)
+    }
+}
+
+final class KitoScreensLocalizationResendTests: XCTestCase {
     /// Regression for a CodeRabbit finding: the OTP screen's resend link used to read
     /// `KitoLocalization` (KitoFields' own provider) for its copy, so an app that localized only
     /// `KitoScreensLocalization` would get English "Resend code" regardless of language. The
