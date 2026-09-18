@@ -1,0 +1,74 @@
+/* Login */
+"login.title" = "Connexion";
+"login.subtitle" = "Bon retour. Entrez vos informations pour continuer.";
+"login.forgotPassword" = "Mot de passe oublié ?";
+"login.or" = "ou";
+"login.newHere" = "Nouveau ici ?";
+"login.createAccount" = "Créer un compte";
+"login.continueWith" = "Continuer avec %@";
+
+/* Sign up */
+"signup.title" = "Créez votre compte";
+"signup.subtitle" = "Cela prend moins d'une minute.";
+"signup.namePlaceholder" = "Jane Doe";
+"signup.confirmPassword" = "Confirmer le mot de passe";
+"signup.confirmPasswordPlaceholder" = "Ressaisissez votre mot de passe";
+"signup.agreeToThe" = "J'accepte les";
+"signup.termsAndPrivacy" = "conditions et la politique de confidentialité";
+"signup.accountCreated" = "Compte créé";
+"signup.alreadyHaveAccount" = "Vous avez déjà un compte ?";
+"signup.signIn" = "Se connecter";
+
+/* Edit profile */
+"profile.title" = "Modifier le profil";
+"profile.yourName" = "Votre nom";
+"profile.changePhoto" = "Changer la photo";
+"profile.fullName" = "Nom complet";
+"profile.dateOfBirth" = "Date de naissance";
+"profile.bio" = "Bio";
+"profile.bioPlaceholder" = "Quelques mots sur vous";
+"profile.saveChanges" = "Enregistrer les modifications";
+"profile.saved" = "Enregistré";
+
+/* M-Pesa */
+"mpesa.payWithMpesa" = "Payer avec M-Pesa";
+"mpesa.payViaMpesa" = "Payer via M-Pesa";
+"mpesa.payingMerchant" = "Paiement à %@";
+"mpesa.mpesaNumber" = "Numéro M-Pesa";
+"mpesa.pinHelp" = "Vous recevrez une invite sur ce téléphone pour saisir votre code PIN M-Pesa.";
+"mpesa.checkPhone" = "Vérifiez votre téléphone et saisissez votre code PIN M-Pesa";
+"mpesa.businessNumber" = "Numéro d'entreprise";
+"mpesa.accountNumber" = "Numéro de compte";
+"mpesa.amount" = "Montant";
+"mpesa.tillNumber" = "Numéro de caisse";
+"mpesa.pay" = "Payer %@";
+"mpesa.iHavePaid" = "J'ai payé";
+"mpesa.paymentReceived" = "Paiement reçu";
+"mpesa.paymentFailed" = "Paiement échoué";
+"mpesa.copy" = "Copier %@";
+"mpesa.instructions" = "Ouvrez M-Pesa ▸ Lipa na M-Pesa ▸ %@, saisissez les détails ci-dessus, puis confirmez ici.";
+"mpesa.payBill" = "Pay Bill";
+"mpesa.buyGoods" = "Buy Goods";
+
+/* Card checkout */
+"checkout.title" = "Paiement";
+"checkout.nameOnCard" = "Nom sur la carte";
+"checkout.nameOnCardPlaceholder" = "Comme indiqué sur la carte";
+"checkout.billingCountry" = "Pays de facturation";
+"checkout.saveCard" = "Enregistrer cette carte pour la prochaine fois";
+"checkout.encryptedNotice" = "Les informations de la carte sont chiffrées et jamais stockées sur cet appareil.";
+"checkout.pay" = "Payer %@";
+"checkout.total" = "Total";
+"checkout.paymentComplete" = "Paiement effectué";
+"checkout.paymentDeclined" = "Paiement refusé";
+
+/* Shared fields */
+"field.mobileNumber" = "Numéro de mobile";
+"field.country" = "Pays";
+
+/* OTP verification */
+"otp.title" = "Vérifiez votre numéro";
+"otp.subtitleFormat" = "Entrez le code envoyé à %@";
+"otp.continueButton" = "Continuer";
+"otp.incorrectCode" = "Code incorrect";
+"otp.verified" = "Vérifié";

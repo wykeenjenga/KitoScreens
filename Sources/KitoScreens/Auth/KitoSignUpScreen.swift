@@ -40,7 +40,7 @@ public struct KitoSignUpScreen: View {
     @State private var valid = [String: Bool]()
     @State private var serverError: String?
 
-    public init(title: String = "Create your account", subtitle: String? = "It takes less than a minute.", submit: @escaping (Registration) async throws -> KitoScreenOutcome) {
+    public init(title: String = KitoScreensLocalization.string("signup.title", "Create your account"), subtitle: String? = KitoScreensLocalization.string("signup.subtitle", "It takes less than a minute."), submit: @escaping (Registration) async throws -> KitoScreenOutcome) {
         self.title = title; self.subtitle = subtitle; self.submit = submit
     }
 
@@ -53,21 +53,21 @@ public struct KitoSignUpScreen: View {
 
     public var body: some View {
         KitoScreenScaffold(header: KitoScreenHeader(title, subtitle: subtitle)) {
-            KitoNameField(text: $name, prompt: "Jane Doe").required().isValid(bind("name"))
+            KitoNameField(text: $name, prompt: KitoScreensLocalization.string("signup.namePlaceholder", "Jane Doe")).required().isValid(bind("name"))
             KitoEmailField(text: $email).suggestsDomainCorrections().required().validationIndicators().isValid(bind("email")).errorMessage(serverError)
             if includesPhone {
-                KitoPhoneField("Mobile number", phoneNumber: $phone).flagStyle(.circle).required().validationIndicators().isValid(bind("phone"))
+                KitoPhoneField(KitoScreensLocalization.string("field.mobileNumber", "Mobile number"), phoneNumber: $phone).flagStyle(.circle).required().validationIndicators().isValid(bind("phone"))
             }
             if includesCountry {
-                KitoCountryField("Country", selection: $country).flagStyle(.circle).required().isValid(bind("country"))
+                KitoCountryField(KitoScreensLocalization.string("field.country", "Country"), selection: $country).flagStyle(.circle).required().isValid(bind("country"))
             }
             KitoPasswordField(text: $password).newPassword().animatedLockIcon().required().strengthMeter().requirements(passwordRules).isValid(bind("password"))
-            KitoPasswordField("Confirm password", text: $confirm, prompt: "Re-enter your password").required().mustMatch($password).validationTrigger(.live).isValid(bind("confirm"))
+            KitoPasswordField(KitoScreensLocalization.string("signup.confirmPassword", "Confirm password"), text: $confirm, prompt: KitoScreensLocalization.string("signup.confirmPasswordPlaceholder", "Re-enter your password")).required().mustMatch($password).validationTrigger(.live).isValid(bind("confirm"))
             if let termsURL {
                 Toggle(isOn: $acceptedTerms) {
                     HStack(spacing: 4) {
-                        Text("I agree to the").font(.footnote)
-                        Link("terms and privacy policy", destination: termsURL).font(.footnote.weight(.semibold))
+                        Text(KitoScreensLocalization.string("signup.agreeToThe", "I agree to the")).font(.footnote)
+                        Link(KitoScreensLocalization.string("signup.termsAndPrivacy", "terms and privacy policy"), destination: termsURL).font(.footnote.weight(.semibold))
                     }
                 }
                 .modifier(SwitchStyleIfAvailable())
@@ -79,13 +79,13 @@ public struct KitoSignUpScreen: View {
                 if case .failure(let message) = outcome { serverError = message; throw KitoScreenError.rejected }
             }
             .showsResult()
-            .successTitle("Account created")
+            .successTitle(KitoScreensLocalization.string("signup.accountCreated", "Account created"))
             .size(.large).fullWidth()
             .disabled(!canSubmit)
             if let onSignIn {
                 HStack(spacing: 4) {
-                    Text("Already have an account?").font(.footnote).foregroundColor(.secondary)
-                    KitoButton("Sign in") { onSignIn() }.variant(.link).size(.small)
+                    Text(KitoScreensLocalization.string("signup.alreadyHaveAccount", "Already have an account?")).font(.footnote).foregroundColor(.secondary)
+                    KitoButton(KitoScreensLocalization.string("signup.signIn", "Sign in")) { onSignIn() }.variant(.link).size(.small)
                 }
             }
         }

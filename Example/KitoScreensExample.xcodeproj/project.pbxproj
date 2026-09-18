@@ -12,7 +12,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		26E2B11033C5719E97314EC1 /* KitoScreens */ = {isa = PBXFileReference; lastKnownFileType = folder; name = KitoScreens; path = ..; sourceTree = SOURCE_ROOT; };
+		63CD864D5F851AF816E201E6 /* wt-screens-catchup */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "wt-screens-catchup"; path = ..; sourceTree = SOURCE_ROOT; };
 		7FCF592834157652D2836354 /* KitoScreensExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitoScreensExampleApp.swift; sourceTree = "<group>"; };
 		FFB8E667961A74A7A9B00C01 /* KitoScreensExample.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = KitoScreensExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -40,7 +40,7 @@
 		626FD9AC357A43DDE4F0E014 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				26E2B11033C5719E97314EC1 /* KitoScreens */,
+				63CD864D5F851AF816E201E6 /* wt-screens-catchup */,
 			);
 			name = Packages;
 			sourceTree = "<group>";

@@ -61,32 +61,32 @@ public struct KitoCardCheckoutScreen: View {
     }
 
     public var body: some View {
-        KitoScreenScaffold(header: KitoScreenHeader("Checkout", subtitle: merchantName)) {
+        KitoScreenScaffold(header: KitoScreenHeader(KitoScreensLocalization.string("checkout.title", "Checkout"), subtitle: merchantName)) {
             summary
             KitoCardNumberField(number: $number).required().isValid(bind("number")).onBrandChange { brand = $0 }.errorMessage(serverError)
             HStack(alignment: .top, spacing: 12) {
                 KitoCardExpiryField(text: $expiry).required().isValid(bind("expiry"))
                 KitoCVVField(text: $cvv, length: brand.cvvLength).required().isValid(bind("cvv"))
             }
-            KitoNameField("Name on card", text: $holder, prompt: "As printed on the card").autocapitalization(.characters).required().isValid(bind("holder"))
-            KitoCountryField("Billing country", selection: $country).flagStyle(.circle)
+            KitoNameField(KitoScreensLocalization.string("checkout.nameOnCard", "Name on card"), text: $holder, prompt: KitoScreensLocalization.string("checkout.nameOnCardPlaceholder", "As printed on the card")).autocapitalization(.characters).required().isValid(bind("holder"))
+            KitoCountryField(KitoScreensLocalization.string("checkout.billingCountry", "Billing country"), selection: $country).flagStyle(.circle)
             if offersSaveCard {
-                Toggle("Save this card for next time", isOn: $saveCard).font(.subheadline).modifier(SwitchStyleIfAvailable())
+                Toggle(KitoScreensLocalization.string("checkout.saveCard", "Save this card for next time"), isOn: $saveCard).font(.subheadline).modifier(SwitchStyleIfAvailable())
             }
             HStack(spacing: 6) {
                 Image(systemName: "lock.fill").font(.caption)
-                Text("Card details are encrypted and never stored on this device.").font(.caption)
+                Text(KitoScreensLocalization.string("checkout.encryptedNotice", "Card details are encrypted and never stored on this device.")).font(.caption)
             }
             .foregroundColor(.secondary)
         } footer: {
-            KitoButton("Pay \(money(total))", systemImage: "lock.fill") {
+            KitoButton(KitoScreensLocalization.format("checkout.pay", "Pay %@", money(total)), systemImage: "lock.fill") {
                 serverError = nil
                 guard let exp = KitoCardExpiryField.components(expiry) else { throw KitoScreenError.rejected }
                 let card = Card(number: number.asciiDigitsOnly, expiryMonth: exp.month, expiryYear: exp.year, cvv: cvv, holder: holder, billingCountryISO: country?.isoCode, saveCard: saveCard)
                 let outcome = try await submit(card)
                 if case .failure(let message) = outcome { serverError = message; throw KitoScreenError.rejected }
             }
-            .showsResult().successTitle("Payment complete").failureTitle("Payment declined")
+            .showsResult().successTitle(KitoScreensLocalization.string("checkout.paymentComplete", "Payment complete")).failureTitle(KitoScreensLocalization.string("checkout.paymentDeclined", "Payment declined"))
             .size(.large).fullWidth()
             .disabled(!canPay)
         }
@@ -98,7 +98,7 @@ public struct KitoCardCheckoutScreen: View {
                 HStack { Text(item.title).font(.subheadline); Spacer(); Text(money(item.amount)).font(.subheadline).monospacedDigit() }
             }
             Divider()
-            HStack { Text("Total").font(.headline); Spacer(); Text(money(total)).font(.headline).monospacedDigit() }
+            HStack { Text(KitoScreensLocalization.string("checkout.total", "Total")).font(.headline); Spacer(); Text(money(total)).font(.headline).monospacedDigit() }
         }
         .padding(18)
         .background(RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color.primary.opacity(0.04)))

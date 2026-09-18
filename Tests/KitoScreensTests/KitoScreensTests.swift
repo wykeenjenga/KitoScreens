@@ -23,5 +23,26 @@ final class KitoScreensTests: XCTestCase {
         _ = KitoEditProfileScreen(profile: .init(name: "Wycliff")) { _ in .success }
         _ = KitoMpesaScreen(amount: 1250) { _ in .success }.merchant("Kito Store")
         _ = KitoCardCheckoutScreen(items: []) { _ in .success }
+        _ = KitoOTPVerificationScreen(destination: "+254 7•• ••• 678", length: 4) { _ in .success }.resend(cooldown: 30) {}
+    }
+}
+
+final class KitoScreensLocalizationTests: XCTestCase {
+    func testEveryBundledLanguageDefinesTheSameKeys() {
+        let en = KitoScreensLocalization.keys(forLanguage: "en")
+        XCTAssertGreaterThan(en.count, 20)
+        for code in ["sw", "fr"] { XCTAssertEqual(KitoScreensLocalization.keys(forLanguage: code), en, code) }
+    }
+
+    func testProviderOverrideTakesPrecedenceOverBundledStrings() {
+        KitoScreensLocalization.provider = { key, _ in key == "login.title" ? "Karibu" : nil }
+        defer { KitoScreensLocalization.provider = nil }
+        XCTAssertEqual(KitoScreensLocalization.string("login.title", "Sign in"), "Karibu")
+        XCTAssertEqual(KitoScreensLocalization.string("not.a.real.key", "fallback"), "fallback", "the provider only overrides the key it recognizes")
+    }
+
+    func testFormatSubstitutesArguments() {
+        let label = KitoScreensLocalization.format("mpesa.pay", "Pay %@", "KES 1,250")
+        XCTAssertTrue(label.contains("KES 1,250"))
     }
 }

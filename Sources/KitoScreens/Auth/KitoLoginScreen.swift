@@ -30,7 +30,7 @@ public struct KitoLoginScreen: View {
     public enum SocialProvider: String, CaseIterable, Identifiable, Sendable {
         case apple, google, facebook
         public var id: String { rawValue }
-        var title: String { "Continue with \(rawValue.capitalized)" }
+        var title: String { KitoScreensLocalization.format("login.continueWith", "Continue with %@", rawValue.capitalized) }
         var symbol: String { self == .apple ? "apple.logo" : self == .google ? "globe" : "f.circle" }
     }
 
@@ -53,7 +53,7 @@ public struct KitoLoginScreen: View {
     @State private var serverError: String?
     @State private var passwordFocused = false
 
-    public init(title: String = "Sign in", subtitle: String? = "Welcome back. Enter your details to continue.", submit: @escaping (Credentials) async throws -> KitoScreenOutcome) {
+    public init(title: String = KitoScreensLocalization.string("login.title", "Sign in"), subtitle: String? = KitoScreensLocalization.string("login.subtitle", "Welcome back. Enter your details to continue."), submit: @escaping (Credentials) async throws -> KitoScreenOutcome) {
         self.title = title; self.subtitle = subtitle; self.submit = submit
     }
 
@@ -62,13 +62,13 @@ public struct KitoLoginScreen: View {
     public var body: some View {
         KitoScreenScaffold(header: header) {
             if usesPhoneInsteadOfEmail {
-                KitoPhoneField("Phone number", phoneNumber: $phone).required().isValid($phoneValid).onSubmit { passwordFocused = true }
+                KitoPhoneField(KitoScreensLocalization.string("field.mobileNumber", "Mobile number"), phoneNumber: $phone).required().isValid($phoneValid).onSubmit { passwordFocused = true }
             } else {
                 KitoEmailField(text: $email).leadingIcon("envelope", focused: "envelope.open.fill", motion: .wiggle).required().isValid($emailValid).errorMessage(serverError).onSubmit { passwordFocused = true }
             }
             KitoPasswordField(text: $password).animatedLockIcon().required().isValid($passwordValid).focused($passwordFocused)
             if let onForgotPassword {
-                HStack { Spacer(); KitoButton("Forgot password?") { onForgotPassword() }.variant(.link).size(.small) }
+                HStack { Spacer(); KitoButton(KitoScreensLocalization.string("login.forgotPassword", "Forgot password?")) { onForgotPassword() }.variant(.link).size(.small) }
             }
         } footer: {
             KitoButton(title) {
@@ -81,7 +81,7 @@ public struct KitoLoginScreen: View {
             .disabled(!canSubmit)
 
             if !socialProviders.isEmpty {
-                HStack { Rectangle().fill(Color.primary.opacity(0.15)).frame(height: 1); Text("or").font(.footnote).foregroundColor(.secondary); Rectangle().fill(Color.primary.opacity(0.15)).frame(height: 1) }
+                HStack { Rectangle().fill(Color.primary.opacity(0.15)).frame(height: 1); Text(KitoScreensLocalization.string("login.or", "or")).font(.footnote).foregroundColor(.secondary); Rectangle().fill(Color.primary.opacity(0.15)).frame(height: 1) }
                 ForEach(socialProviders) { provider in
                     KitoButton(provider.title, systemImage: provider.symbol) { onSocial?(provider) }
                         .variant(provider == .apple ? .primary : .outlined).fullWidth()
@@ -89,8 +89,8 @@ public struct KitoLoginScreen: View {
             }
             if let onCreateAccount {
                 HStack(spacing: 4) {
-                    Text("New here?").font(.footnote).foregroundColor(.secondary)
-                    KitoButton("Create an account") { onCreateAccount() }.variant(.link).size(.small)
+                    Text(KitoScreensLocalization.string("login.newHere", "New here?")).font(.footnote).foregroundColor(.secondary)
+                    KitoButton(KitoScreensLocalization.string("login.createAccount", "Create an account")) { onCreateAccount() }.variant(.link).size(.small)
                 }
             }
         }

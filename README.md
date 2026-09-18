@@ -9,7 +9,7 @@ Prebuilt, production-ready SwiftUI screens composed from [KitoFields](https://gi
 ## Installation
 
 ```swift
-.package(url: "https://github.com/wykeenjenga/KitoScreens.git", from: "0.1.1")
+.package(url: "https://github.com/wykeenjenga/KitoScreens.git", from: "0.2.0")
 ```
 
 Then `import KitoScreens`. Field and button themes come from `KitoFieldTheme` / `KitoButtonTheme` in the environment, so the screens match the rest of your app automatically.
@@ -90,6 +90,17 @@ KitoCardCheckoutScreen(items: [
 .offersSaveCard(true)
 ```
 
+### Verify code
+
+```swift
+KitoOTPVerificationScreen(destination: phone.international, length: 6) { code in
+    try await auth.verify(code)
+    return .success                                     // or .failure(message: "Incorrect code")
+}
+.resend(cooldown: 30) { try await auth.resendCode() }     // "Resend code" link, disables itself
+.logo { Image("logo").resizable().frame(height: 40) }
+```
+
 ## Theming
 
 ```swift
@@ -97,6 +108,21 @@ KitoCardCheckoutScreen(items: [
 .kitoFieldTheme { $0.shape = .capsule }
 .kitoButtonTheme { $0.tint = .black }
 ```
+
+## Localization
+
+Every screen's own copy — titles, field labels, button titles, helper text — is bundled in
+English, Swahili (`sw`) and French (`fr`), and follows the device language automatically. Override
+or add a language from your app with `KitoScreensLocalization.provider`, exactly like
+`KitoLocalization` in KitoFields and `KitoButtonsLocalization` in KitoButtons:
+
+```swift
+KitoScreensLocalization.provider = { key, fallback in
+    key == "login.title" ? "Karibu" : nil   // nil falls through to the bundled string
+}
+```
+
+The example app's language picker switches all three packages together this way.
 
 ## Outcomes and errors
 
