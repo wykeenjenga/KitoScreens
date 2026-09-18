@@ -19,15 +19,45 @@ public struct KitoScreenTheme: Sendable {
     public var titleFont: Font = .largeTitle.weight(.bold)
     public var subtitleFont: Font = .body
     public var subtitleColor: Color = .secondary
+    /// Secondary/body copy inside a screen — dividers, toggle labels, line-item rows, hints.
+    /// Roughly `.subheadline` sized; distinct from `subtitleFont`, which is the header's own.
+    public var bodyFont: Font = .subheadline
+    /// Footnotes, captions, disclosures ("Card details are encrypted…").
+    public var captionFont: Font = .footnote
+    /// Emphasised inline text — a total, a name — short of the header's own `titleFont`.
+    public var emphasisFont: Font = .headline
     public var cardCornerRadius: CGFloat = 20
     public var cardBackground: Color = Color.primary.opacity(0.04)
     public var showsLogo = true
 
     public init() {}
-    public static let `default` = KitoScreenTheme()
+
+    /// The theme every screen falls back to when nothing in its view hierarchy sets
+    /// `.kitoScreenTheme(...)`. Set this **once**, e.g. in your `App`'s `init()`, to apply a look
+    /// (a custom font, different spacing) app-wide without wrapping every screen in a modifier.
+    /// An explicit `.kitoScreenTheme(...)` anywhere in the view hierarchy still overrides this for
+    /// that subtree. See `KitoTypography.apply(...)` to set a custom font across KitoScreens,
+    /// KitoFields and KitoButtons in one call.
+    public static var `default` = KitoScreenTheme()
+
+    /// Builds a theme where every text role uses `family`, at the size/weight this theme would
+    /// otherwise use for that role. Dynamic Type still scales, via `relativeTo:`.
+    public static func custom(_ family: KitoFields.KitoFontFamily, base: KitoScreenTheme = KitoScreenTheme()) -> KitoScreenTheme {
+        var theme = base
+        theme.titleFont = family.font(size: 34, weight: .bold, relativeTo: .largeTitle)
+        theme.subtitleFont = family.font(size: 17, relativeTo: .body)
+        theme.bodyFont = family.font(size: 15, relativeTo: .subheadline)
+        theme.captionFont = family.font(size: 13, relativeTo: .footnote)
+        theme.emphasisFont = family.font(size: 17, weight: .semibold, relativeTo: .headline)
+        return theme
+    }
 }
 
-private struct KitoScreenThemeKey: EnvironmentKey { static let defaultValue = KitoScreenTheme.default }
+private struct KitoScreenThemeKey: EnvironmentKey {
+    // Computed, not `let`: re-reads `KitoScreenTheme.default` on every fallback so setting it
+    // once at launch (before any screen's environment is first read) takes effect everywhere.
+    static var defaultValue: KitoScreenTheme { KitoScreenTheme.default }
+}
 
 public extension EnvironmentValues {
     var kitoScreenTheme: KitoScreenTheme {

@@ -32,6 +32,7 @@ public struct KitoOTPVerificationScreen: View {
     @State private var errorMessage: String?
     @State private var isVerifying = false
     @State private var isResending = false
+    @Environment(\.kitoScreenTheme) private var theme
 
     /// - Parameters:
     ///   - destination: Where the code was sent, already formatted for display (e.g. a masked
@@ -117,6 +118,7 @@ private struct KitoResendLink: View {
 
     @State private var remaining: Int = 0
     @State private var countdownTask: Task<Void, Never>?
+    @Environment(\.kitoScreenTheme) private var theme
 
     var body: some View {
         Button(action: resend) {
@@ -124,7 +126,7 @@ private struct KitoResendLink: View {
                 ProgressView().scaleEffect(0.8)
             } else {
                 Text(remaining > 0 ? KitoScreensLocalization.format("otp.resendIn", "Resend in %ds", remaining) : KitoScreensLocalization.string("otp.resend", "Resend code"))
-                    .font(.footnote)
+                    .font(theme.captionFont)
                     .underline(remaining == 0)
             }
         }

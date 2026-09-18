@@ -39,6 +39,7 @@ public struct KitoSignUpScreen: View {
     @State private var acceptedTerms = false
     @State private var valid = [String: Bool]()
     @State private var serverError: String?
+    @Environment(\.kitoScreenTheme) private var theme
 
     public init(title: String = KitoScreensLocalization.string("signup.title", "Create your account"), subtitle: String? = KitoScreensLocalization.string("signup.subtitle", "It takes less than a minute."), submit: @escaping (Registration) async throws -> KitoScreenOutcome) {
         self.title = title; self.subtitle = subtitle; self.submit = submit
@@ -66,8 +67,8 @@ public struct KitoSignUpScreen: View {
             if let termsURL {
                 Toggle(isOn: $acceptedTerms) {
                     HStack(spacing: 4) {
-                        Text(KitoScreensLocalization.string("signup.agreeToThe", "I agree to the")).font(.footnote)
-                        Link(KitoScreensLocalization.string("signup.termsAndPrivacy", "terms and privacy policy"), destination: termsURL).font(.footnote.weight(.semibold))
+                        Text(KitoScreensLocalization.string("signup.agreeToThe", "I agree to the")).font(theme.captionFont)
+                        Link(KitoScreensLocalization.string("signup.termsAndPrivacy", "terms and privacy policy"), destination: termsURL).font(theme.captionFont.weight(.semibold))
                     }
                 }
                 .modifier(SwitchStyleIfAvailable())
@@ -84,7 +85,7 @@ public struct KitoSignUpScreen: View {
             .disabled(!canSubmit)
             if let onSignIn {
                 HStack(spacing: 4) {
-                    Text(KitoScreensLocalization.string("signup.alreadyHaveAccount", "Already have an account?")).font(.footnote).foregroundColor(.secondary)
+                    Text(KitoScreensLocalization.string("signup.alreadyHaveAccount", "Already have an account?")).font(theme.captionFont).foregroundColor(.secondary)
                     KitoButton(KitoScreensLocalization.string("signup.signIn", "Sign in")) { onSignIn() }.variant(.link).size(.small)
                 }
             }

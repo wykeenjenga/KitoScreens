@@ -46,6 +46,7 @@ public struct KitoCardCheckoutScreen: View {
     @State private var valid = [String: Bool]()
     @State private var brand: KitoCardBrand = .unknown
     @State private var serverError: String?
+    @Environment(\.kitoScreenTheme) private var theme
 
     public init(items: [LineItem], currencyCode: String = "USD", submit: @escaping (Card) async throws -> KitoScreenOutcome) {
         self.items = items; self.currencyCode = currencyCode; self.submit = submit
@@ -71,11 +72,11 @@ public struct KitoCardCheckoutScreen: View {
             KitoNameField(KitoScreensLocalization.string("checkout.nameOnCard", "Name on card"), text: $holder, prompt: KitoScreensLocalization.string("checkout.nameOnCardPlaceholder", "As printed on the card")).autocapitalization(.characters).required().isValid(bind("holder"))
             KitoCountryField(KitoScreensLocalization.string("checkout.billingCountry", "Billing country"), selection: $country).flagStyle(.circle)
             if offersSaveCard {
-                Toggle(KitoScreensLocalization.string("checkout.saveCard", "Save this card for next time"), isOn: $saveCard).font(.subheadline).modifier(SwitchStyleIfAvailable())
+                Toggle(KitoScreensLocalization.string("checkout.saveCard", "Save this card for next time"), isOn: $saveCard).font(theme.bodyFont).modifier(SwitchStyleIfAvailable())
             }
             HStack(spacing: 6) {
                 Image(systemName: "lock.fill").font(.caption)
-                Text(KitoScreensLocalization.string("checkout.encryptedNotice", "Card details are encrypted and never stored on this device.")).font(.caption)
+                Text(KitoScreensLocalization.string("checkout.encryptedNotice", "Card details are encrypted and never stored on this device.")).font(theme.captionFont)
             }
             .foregroundColor(.secondary)
         } footer: {
@@ -95,10 +96,10 @@ public struct KitoCardCheckoutScreen: View {
     private var summary: some View {
         VStack(spacing: 10) {
             ForEach(items) { item in
-                HStack { Text(item.title).font(.subheadline); Spacer(); Text(money(item.amount)).font(.subheadline).monospacedDigit() }
+                HStack { Text(item.title).font(theme.bodyFont); Spacer(); Text(money(item.amount)).font(theme.bodyFont).monospacedDigit() }
             }
             Divider()
-            HStack { Text(KitoScreensLocalization.string("checkout.total", "Total")).font(.headline); Spacer(); Text(money(total)).font(.headline).monospacedDigit() }
+            HStack { Text(KitoScreensLocalization.string("checkout.total", "Total")).font(theme.emphasisFont); Spacer(); Text(money(total)).font(theme.emphasisFont).monospacedDigit() }
         }
         .padding(18)
         .background(RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color.primary.opacity(0.04)))

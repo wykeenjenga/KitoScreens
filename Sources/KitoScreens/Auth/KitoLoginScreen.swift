@@ -52,6 +52,7 @@ public struct KitoLoginScreen: View {
     @State private var passwordValid = false
     @State private var serverError: String?
     @State private var passwordFocused = false
+    @Environment(\.kitoScreenTheme) private var theme
 
     public init(title: String = KitoScreensLocalization.string("login.title", "Sign in"), subtitle: String? = KitoScreensLocalization.string("login.subtitle", "Welcome back. Enter your details to continue."), submit: @escaping (Credentials) async throws -> KitoScreenOutcome) {
         self.title = title; self.subtitle = subtitle; self.submit = submit
@@ -81,7 +82,7 @@ public struct KitoLoginScreen: View {
             .disabled(!canSubmit)
 
             if !socialProviders.isEmpty {
-                HStack { Rectangle().fill(Color.primary.opacity(0.15)).frame(height: 1); Text(KitoScreensLocalization.string("login.or", "or")).font(.footnote).foregroundColor(.secondary); Rectangle().fill(Color.primary.opacity(0.15)).frame(height: 1) }
+                HStack { Rectangle().fill(Color.primary.opacity(0.15)).frame(height: 1); Text(KitoScreensLocalization.string("login.or", "or")).font(theme.captionFont).foregroundColor(.secondary); Rectangle().fill(Color.primary.opacity(0.15)).frame(height: 1) }
                 ForEach(socialProviders) { provider in
                     KitoButton(provider.title, systemImage: provider.symbol) { onSocial?(provider) }
                         .variant(provider == .apple ? .primary : .outlined).fullWidth()
@@ -89,7 +90,7 @@ public struct KitoLoginScreen: View {
             }
             if let onCreateAccount {
                 HStack(spacing: 4) {
-                    Text(KitoScreensLocalization.string("login.newHere", "New here?")).font(.footnote).foregroundColor(.secondary)
+                    Text(KitoScreensLocalization.string("login.newHere", "New here?")).font(theme.captionFont).foregroundColor(.secondary)
                     KitoButton(KitoScreensLocalization.string("login.createAccount", "Create an account")) { onCreateAccount() }.variant(.link).size(.small)
                 }
             }

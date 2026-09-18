@@ -109,6 +109,34 @@ KitoOTPVerificationScreen(destination: phone.international, length: 6) { code in
 .kitoButtonTheme { $0.tint = .black }
 ```
 
+### Custom fonts, set once at launch
+
+`KitoFieldTheme`, `KitoButtonTheme` and `KitoScreenTheme` each have their own `.custom(_:)`
+builder, taking a `KitoFontFamily` (a PostScript name per weight — most custom fonts ship as
+separate files per weight, not one name SwiftUI can re-weight with `.weight()`). Since
+KitoScreens is the package that already depends on the other two, `KitoTypography.apply(...)` is
+the one call that sets all three at once:
+
+```swift
+@main
+struct MyApp: App {
+    init() {
+        KitoTypography.apply(
+            regular: "Inter-Regular",
+            medium: "Inter-Medium",
+            semibold: "Inter-SemiBold",
+            bold: "Inter-Bold"
+        )
+    }
+    var body: some Scene { WindowGroup { ContentView() } }
+}
+```
+
+Call it once, before any field, button or screen's environment is first read — in practice,
+anywhere before your first view's `body` runs. No `.kitoFieldTheme(...)` / `.kitoButtonTheme(...)`
+/ `.kitoScreenTheme(...)` wrapping needed anywhere in your view hierarchy — though an explicit one
+still overrides this for whatever subtree it's applied to, same as any other theme override.
+
 ## Localization
 
 Every screen's own copy — titles, field labels, button titles, helper text — is bundled in
