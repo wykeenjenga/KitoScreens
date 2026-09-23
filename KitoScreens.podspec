@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KitoScreens'
-  s.version          = '0.3.0'
+  s.version          = '0.3.1'
   s.summary          = 'Prebuilt SwiftUI screens: sign in, sign up, edit profile, M-Pesa and card checkout.'
   s.description      = <<-DESC
     Production-ready SwiftUI screens composed from KitoFields and KitoButtons. Hand each screen an
@@ -16,12 +16,12 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '15.0'
   s.osx.deployment_target = '12.0'
   s.tvos.deployment_target = '15.0'
-  s.watchos.deployment_target = '8.0'
+  s.watchos.deployment_target = '9.0'
   s.visionos.deployment_target = '1.0'
   s.swift_versions   = ['5.9']
   s.frameworks       = 'SwiftUI'
   s.source_files     = 'Sources/KitoScreens/**/*.swift'
   s.resource_bundles = { 'KitoScreens' => ['Sources/KitoScreens/Resources/**/*.lproj'] }
-  s.dependency 'KitoFields', '>= 1.8', '< 2.0'
-  s.dependency 'KitoButtons', '>= 1.8', '< 2.0'
+  s.dependency 'KitoFields', '>= 1.9.2', '< 2.0'
+  s.dependency 'KitoButtons', '>= 1.8.1', '< 2.0'
 end

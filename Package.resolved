@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/wykeenjenga/KitoButtons.git",
       "state" : {
-        "revision" : "6de1cd67f9ee1817272ae7d08747ce4e25649e5a",
-        "version" : "1.8.0"
+        "revision" : "55b76bd77ac1fca1796e91f8b7add7c4b36682ad",
+        "version" : "1.8.1"
       }
     },
     {
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/wykeenjenga/KitoFields.git",
       "state" : {
-        "revision" : "cb68d0f59011cc35b2674356550492d0f0f861e5",
-        "version" : "1.8.0"
+        "revision" : "b7974016007c3e2cdce58dfabeabd2c775a9dfbe",
+        "version" : "1.9.2"
       }
     }
   ],

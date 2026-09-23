@@ -2,14 +2,14 @@
 
 Prebuilt, production-ready SwiftUI screens composed from [KitoFields](https://github.com/wykeenjenga/KitoFields) and [KitoButtons](https://github.com/wykeenjenga/KitoButtons): sign in, sign up, edit profile, M-Pesa payment (Express and Paybill/Till) and card checkout. Drop one in, hand it an async closure, and you get validation, animated fields, loading and result states, inline server errors and localization for free.
 
-- iOS 15+, macOS 12+, tvOS 15+, watchOS 8+, visionOS 1+
+- iOS 15+, macOS 12+, tvOS 15+, watchOS 9+, visionOS 1+
 - Author: **Wycliff Njenga**
 - Licence: MIT
 
 ## Installation
 
 ```swift
-.package(url: "https://github.com/wykeenjenga/KitoScreens.git", from: "0.3.0")
+.package(url: "https://github.com/wykeenjenga/KitoScreens.git", from: "0.3.1")
 ```
 
 Then `import KitoScreens`. Field and button themes come from `KitoFieldTheme` / `KitoButtonTheme` in the environment, so the screens match the rest of your app automatically.
